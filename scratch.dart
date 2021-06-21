@@ -13,7 +13,7 @@ void task1() {
   print('Task 1 complete');
 }
 
-Future task2() async {
+Future<dynamic> task2() async {
   Duration duration = Duration(seconds: 3);
   String result;
   await Future.delayed(duration, () {

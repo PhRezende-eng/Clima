@@ -1,8 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 
-class Location {
-  double latitude; //propiredade
-  double longitude;
+class ClassLocation {
+  double latitude; //propriedade da class que virá a ser objeto
+  double longitude; //propriedade da class que virá a ser objeto
 
   Future<void> getCurrenteLocation() async {
     try {

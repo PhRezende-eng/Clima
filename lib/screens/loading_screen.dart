@@ -30,7 +30,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   // }
 
   void getLocation() async {
-    ClassLocation location = ClassLocation(); // --> objeto criado
+    ClassLocation location = ClassLocation(); // --> objeto criado/instanciado
     await location.getCurrenteLocation();
     print(location.latitude);
     print(location.longitude);
@@ -40,13 +40,17 @@ class _LoadingScreenState extends State<LoadingScreen> {
     var url = Uri.parse(
         'https://api.openweathermap.org/data/2.5/onecall?lat=35&lon=139&appid=4b567033eb2835b4087185083040ffde');
     http.Response response = await http.get(url);
-    // data = response.body;
-    if (response.statusCode == 200) {
-      String data = response.body;
-      print(data);
-    } else {
-      print('ERROR! Esse foi o status code:${response.statusCode}');
-    }
+    String data = response.body;
+    int statusCode = response.statusCode;
+    // if (response.statusCode == 200) {
+    //   String data = response.body;
+    //   print(data);
+    // } else {
+    //   print('ERROR! Esse foi o status code:${response.statusCode}');
+    // }
+    (response.statusCode == 2)
+        ? print(data)
+        : print('ERROR! statusCode:$statusCode');
   }
 
   @override

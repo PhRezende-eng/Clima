@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:clima/services/location.dart';
+import 'package:http/http.dart' as http;
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -7,10 +10,12 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+  dynamic data;
   @override
   void initState() {
     super.initState();
     getLocation();
+    getData();
   }
 
   // void func() {
@@ -31,17 +36,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
     print(location.longitude);
   }
 
+  void getData() async {
+    var url = Uri.parse(
+        'https://api.openweathermap.org/data/2.5/onecall?lat=35&lon=139&appid=4b567033eb2835b4087185083040ffde');
+    http.Response response = await http.get(url);
+    // data = response.body;
+    if (response.statusCode == 200) {
+      String data = response.body;
+      print(data);
+    } else {
+      print('ERROR! Esse foi o status code:${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue)),
-          onPressed: getLocation,
-          child: Text('Get Location'),
-        ),
-      ),
-    );
+    // getData();
+    return Scaffold();
   }
 }

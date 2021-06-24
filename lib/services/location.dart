@@ -13,7 +13,7 @@ class ClassLocation {
       latitude = position.latitude;
       longitude = position.longitude;
     } catch (e) {
-      print('--$e');
+      print('*****************************$e');
     }
   }
 }

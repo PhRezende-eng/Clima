@@ -1,8 +1,7 @@
-import 'dart:convert';
-
+import 'package:clima/screens/location_screen.dart';
+import 'package:clima/services/networking.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/services/location.dart';
-import 'package:http/http.dart' as http;
 
 const apiKey = '4b567033eb2835b4087185083040ffde';
 
@@ -30,49 +29,28 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    getLocation();
-    // getData();
+    getLocationData();
   }
 
-  void getLocation() async {
+  void getLocationData() async {
     ClassLocation location = ClassLocation(); // --> objeto criado/instanciado
     await location.getCurrenteLocation();
     latitude = location.latitude;
     longitude = location.longitude;
+
+    NetworkHelper networkHelper = NetworkHelper(
+        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+
+    var weatherData = await networkHelper.getData();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen();
+    }));
+
+    print(networkHelper.temp);
     print(latitude);
     print(longitude);
-    getData();
-  }
-
-  void getData() async {
-    var url = Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
-    http.Response response = await http.get(url);
-    dynamic data = response.body;
-    int statusCode = response.statusCode;
-
-    var decodedData = await jsonDecode(data);
-    dataa = decodedData;
-
-    dynamic temp = decodedData['main']['temp'];
-    dynamic condition = decodedData['weather'][0]['id'];
-    dynamic name = decodedData['name'];
-    dynamic weatherDescription = decodedData['weather'][0]['description'];
-
-    print(weatherDescription);
-    print(name);
-    print(temp);
-    print(condition);
-
-    // if (response.statusCode == 200) {
-    //   String data = response.body;
-    //   print(data);
-    // } else {
-    //   print('ERROR! Esse foi o status code:${response.statusCode}');
-    // }
-    (response.statusCode == 200)
-        ? print('------------------$data------------------')
-        : print('ERROR! statusCode:$statusCode');
+    print(weatherData);
   }
 
   @override
@@ -80,7 +58,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Text('${dataa['weather'][0]['description']}'),
+          child: Text(''),
         ),
       ),
     );

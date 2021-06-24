@@ -74,3 +74,7 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+// dynamic temp = decodedData['main']['temp'];
+// dynamic condition = decodedData['weather'][0]['id'];
+// dynamic name = decodedData['name'];
+// dynamic weatherDescription = decodedData['weather'][0]['description'];

@@ -31,6 +31,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
     getLocation();
+    // getData();
   }
 
   void getLocation() async {
@@ -50,13 +51,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     dynamic data = response.body;
     int statusCode = response.statusCode;
 
-    var decodedData = jsonDecode(data);
+    var decodedData = await jsonDecode(data);
     dataa = decodedData;
 
-    double temp = decodedData['main']['temp'];
-    int condition = decodedData['weather'][0]['id'];
-    String name = decodedData['name'];
-    String weatherDescription = decodedData['weather'][0]['description'];
+    dynamic temp = decodedData['main']['temp'];
+    dynamic condition = decodedData['weather'][0]['id'];
+    dynamic name = decodedData['name'];
+    dynamic weatherDescription = decodedData['weather'][0]['description'];
 
     print(weatherDescription);
     print(name);
@@ -79,8 +80,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
       body: Center(
         child: Container(
-            // child: Text('${dataa['weather'][0]['description']}'),
-            ),
+          child: Text('${dataa['weather'][0]['description']}'),
+        ),
       ),
     );
   }

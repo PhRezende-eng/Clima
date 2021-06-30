@@ -21,8 +21,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   //   // TODO: implement deactivate
   //   super.deactivate();
   // }
-  var dataa;
-
+  var data;
+  dynamic temp;
+  dynamic condition;
+  dynamic name;
+  dynamic weatherDescription;
+  bool isLoading = true;
   double latitude;
   double longitude;
 
@@ -41,26 +45,55 @@ class _LoadingScreenState extends State<LoadingScreen> {
     NetworkHelper networkHelper = NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
 
-    var weatherData = await networkHelper.getData();
+    data = await networkHelper.getData();
+    setState(() {
+      isLoading = false;
+    });
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LocationScreen();
-    }));
+    temp = data['main']['temp'];
+    condition = data['weather'][0]['id'];
 
-    print(networkHelper.temp);
-    print(latitude);
-    print(longitude);
-    print(weatherData);
+    // ou
+
+    name = networkHelper.name;
+    weatherDescription = networkHelper.weatherDescription;
+
+    // print(latitude);
+    // print(longitude);
+    print(data);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Text(''),
-        ),
-      ),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('temp:                  $temp'),
+                  Text('condition:          $condition'),
+                  Text('name:                 $name'),
+                  Text('description:       $weatherDescription'),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LocationScreen();
+                          },
+                        ),
+                      );
+                    },
+                    child: Text('Prosseguir'),
+                  )
+                ],
+              ),
+            ),
     );
   }
 }

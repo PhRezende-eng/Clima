@@ -11,10 +11,6 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  // void func() {
-  //   setState(() {});
-  // }
-
   // @override
   // void deactivate() {
   // ignore: todo
@@ -57,10 +53,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     name = networkHelper.name;
     weatherDescription = networkHelper.weatherDescription;
-
-    // print(latitude);
-    // print(longitude);
-    print(data);
   }
 
   @override

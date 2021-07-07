@@ -1,7 +1,7 @@
-import 'package:clima/screens/location_screen.dart';
-import 'package:clima/services/networking.dart';
+import 'package:climadata/screens/location_screen.dart';
+import 'package:climadata/services/networking.dart';
 import 'package:flutter/material.dart';
-import 'package:clima/services/location.dart';
+import 'package:climadata/services/location.dart';
 
 const apiKey = '4b567033eb2835b4087185083040ffde';
 

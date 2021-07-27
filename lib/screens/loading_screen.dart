@@ -2,6 +2,7 @@ import 'package:climadata/screens/location_screen.dart';
 import 'package:climadata/services/networking.dart';
 import 'package:flutter/material.dart';
 import 'package:climadata/services/location.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const apiKey = '4b567033eb2835b4087185083040ffde';
 
@@ -17,10 +18,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   //   // TODO: implement deactivate
   //   super.deactivate();
   // }
-  var data;
+  dynamic data;
   dynamic temp;
   dynamic condition;
   dynamic name;
+  NetworkHelper networkHelper;
   dynamic weatherDescription;
   bool isLoading = true;
   double latitude;
@@ -32,13 +34,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getLocationData();
   }
 
-  void getLocationData() async {
+  Future<void> getLocationData() async {
     ClassLocation location = ClassLocation(); // --> objeto criado/instanciado
     await location.getCurrenteLocation();
     latitude = location.latitude;
     longitude = location.longitude;
 
-    NetworkHelper networkHelper = NetworkHelper(
+    networkHelper = await NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
 
     data = await networkHelper.getData();
@@ -58,11 +60,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Center(
+      body: FutureBuilder(
+        future: networkHelper.getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: SpinKitDoubleBounce(
+                color: Colors.blue,
+                size: 100.0,
+              ),
+            );
+          } else if (snapshot.error != null) {
+            return Center(
+              child: Text('Ocorreu um erro'),
+            );
+          } else {
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,6 +84,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   Text('name:                 $name'),
                   Text('description:       $weatherDescription'),
                   ElevatedButton(
+                    child: Text('Prosseguir'),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -81,11 +95,45 @@ class _LoadingScreenState extends State<LoadingScreen> {
                         ),
                       );
                     },
-                    child: Text('Prosseguir'),
                   )
                 ],
               ),
-            ),
+            );
+          }
+        },
+      ),
+      // body: isLoading
+      //     ? Center(
+      //         child: SpinKitDoubleBounce(
+      //           color: Colors.blue,
+      //           size: 100.0,
+      //           duration: Duration(seconds: 3),
+      //         ),
+      //       )
+      //     : Center(
+      //         child: Column(
+      //           mainAxisAlignment: MainAxisAlignment.center,
+      //           children: [
+      //             Text('temp:                  $temp'),
+      //             Text('condition:          $condition'),
+      //             Text('name:                 $name'),
+      //             Text('description:       $weatherDescription'),
+      //             ElevatedButton(
+      //               onPressed: () {
+      //                 Navigator.push(
+      //                   context,
+      //                   MaterialPageRoute(
+      //                     builder: (context) {
+      //                       return LocationScreen();
+      //                     },
+      //                   ),
+      //                 );
+      //               },
+      //               child: Text('Prosseguir'),
+      //             )
+      //           ],
+      //         ),
+      //       ),
     );
   }
 }

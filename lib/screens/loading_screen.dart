@@ -40,6 +40,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     latitude = location.latitude;
     longitude = location.longitude;
 
+    // ignore: await_only_futures
     networkHelper = await NetworkHelper(
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
 
@@ -48,7 +49,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       isLoading = false;
     });
 
-    temp = data['main']['temp'];
+    temp = (data['main']['temp'] - 273.15).toStringAsFixed(0);
     condition = data['weather'][0]['id'];
 
     // ou
@@ -114,7 +115,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('temp:                  $temp'),
+                  Text('temp:                  $temp°'),
                   Text('condition:          $condition'),
                   Text('name:                 $name'),
                   Text('description:       $weatherDescription'),

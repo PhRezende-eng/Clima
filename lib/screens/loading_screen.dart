@@ -60,57 +60,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: networkHelper.getData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: SpinKitDoubleBounce(
-                color: Colors.blue,
-                size: 100.0,
-              ),
-            );
-          } else if (snapshot.error != null) {
-            return Center(
-              child: Text('Ocorreu um erro'),
-            );
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('temp:                  $temp'),
-                  Text('condition:          $condition'),
-                  Text('name:                 $name'),
-                  Text('description:       $weatherDescription'),
-                  ElevatedButton(
-                    child: Text('Prosseguir'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return LocationScreen();
-                          },
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-            );
-          }
-        },
-      ),
-      // body: isLoading
-      //     ? Center(
+      // body: FutureBuilder(
+      //   future: networkHelper.getData(),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.waiting) {
+      //       return Center(
       //         child: SpinKitDoubleBounce(
       //           color: Colors.blue,
       //           size: 100.0,
-      //           duration: Duration(seconds: 3),
       //         ),
-      //       )
-      //     : Center(
+      //       );
+      //     } else if (snapshot.error != null) {
+      //       return Center(
+      //         child: Text('Ocorreu um erro'),
+      //       );
+      //     } else {
+      //       return Center(
       //         child: Column(
       //           mainAxisAlignment: MainAxisAlignment.center,
       //           children: [
@@ -119,6 +84,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       //             Text('name:                 $name'),
       //             Text('description:       $weatherDescription'),
       //             ElevatedButton(
+      //               child: Text('Prosseguir'),
       //               onPressed: () {
       //                 Navigator.push(
       //                   context,
@@ -129,11 +95,47 @@ class _LoadingScreenState extends State<LoadingScreen> {
       //                   ),
       //                 );
       //               },
-      //               child: Text('Prosseguir'),
       //             )
       //           ],
       //         ),
-      //       ),
+      //       );
+      //     }
+      //   },
+      // ),
+      body: isLoading
+          ? Center(
+              child: SpinKitDoubleBounce(
+                color: Colors.blue,
+                size: 100.0,
+                duration: Duration(seconds: 3),
+              ),
+            )
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('temp:                  $temp'),
+                  Text('condition:          $condition'),
+                  Text('name:                 $name'),
+                  Text('description:       $weatherDescription'),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LocationScreen(
+                              locationWeather: data,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Text('Prosseguir'),
+                  )
+                ],
+              ),
+            ),
     );
   }
 }

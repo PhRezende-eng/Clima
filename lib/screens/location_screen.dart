@@ -79,7 +79,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(right: 15.0),
                 child: Text(
-                  "It's $condition time in $name!",
+                  "It's 🍦 time in $name!",
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),

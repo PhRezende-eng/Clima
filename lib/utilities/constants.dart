@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
 
+TextStyle funcKTempTextStyle(double fontSize) {
+  return TextStyle(
+    fontFamily: 'Spartan MB',
+    fontSize: fontSize,
+  );
+}
+
+TextStyle funcKConditionTextStyle(double fontSize) {
+  return TextStyle(
+    fontSize: fontSize,
+  );
+}
+
 const kTempTextStyle = TextStyle(
   fontFamily: 'Spartan MB',
   fontSize: 100.0,

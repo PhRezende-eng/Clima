@@ -11,7 +11,8 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weatherModel = WeatherModel();
-  int temp;
+
+  String temp;
   int condition;
   String name;
   @override
@@ -28,6 +29,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var dynamicSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -65,16 +67,18 @@ class _LocationScreenState extends State<LocationScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 15.0),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      '${weatherModel.getMessage(temp)}',
-                      style: kTempTextStyle,
+                      '${weatherModel.getMessage(25)}${weatherModel.getWeatherIcon(300)}',
+                      style: funcKTempTextStyle(dynamicSize.height * 0.1),
+                      textAlign: TextAlign.center,
                     ),
-                    Text(
-                      '${weatherModel.getWeatherIcon(condition)}',
-                      style: kConditionTextStyle,
-                    ),
+                    // Text(
+                    //   '${weatherModel.getWeatherIcon(300)}',
+                    //   style: funcKConditionTextStyle(dynamicSize.height * 0.07),
+                    // ),
                   ],
                 ),
               ),

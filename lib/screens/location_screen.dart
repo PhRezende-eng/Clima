@@ -11,7 +11,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weatherModel = WeatherModel();
-  String temp;
+  int temp;
   int condition;
   String name;
   @override
@@ -68,12 +68,11 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      // '$temp°'
-                      '${weatherModel.getMessage(15)}',
+                      '${weatherModel.getMessage(temp)}',
                       style: kTempTextStyle,
                     ),
                     Text(
-                      '${weatherModel.getWeatherIcon(300)}',
+                      '${weatherModel.getWeatherIcon(condition)}',
                       style: kConditionTextStyle,
                     ),
                   ],

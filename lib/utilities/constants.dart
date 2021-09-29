@@ -7,6 +7,13 @@ TextStyle funcKTempTextStyle(double fontSize) {
   );
 }
 
+TextStyle funcKMessageTextStyle(double fontSize) {
+  return TextStyle(
+    fontFamily: 'Spartan MB',
+    fontSize: fontSize,
+  );
+}
+
 TextStyle funcKConditionTextStyle(double fontSize) {
   return TextStyle(
     fontSize: fontSize,

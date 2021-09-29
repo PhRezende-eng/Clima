@@ -12,8 +12,8 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weatherModel = WeatherModel();
 
-  String temp;
-  int condition;
+  String weatherTemp;
+  String weatherIcon;
   String name;
   @override
   void initState() {
@@ -22,8 +22,11 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic weatherData) {
-    temp = (weatherData['main']['temp'] - 273.15).toStringAsFixed(0);
-    condition = weatherData['weather'][0]['id'];
+    double temperature = (weatherData['main']['temp'] - 273.15);
+    var temp = temperature.toInt();
+    var condition = weatherData['weather'][0]['id'];
+    weatherTemp = weatherModel.getMessage(temp);
+    weatherIcon = weatherModel.getWeatherIcon(condition);
     name = weatherData['name'];
   }
 
@@ -42,55 +45,61 @@ class _LocationScreenState extends State<LocationScreen> {
         ),
         constraints: BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  MaterialButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.near_me,
-                      size: 50.0,
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.location_city,
-                      size: 50.0,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      '${weatherModel.getMessage(25)}${weatherModel.getWeatherIcon(300)}',
-                      style: funcKTempTextStyle(dynamicSize.height * 0.1),
-                      textAlign: TextAlign.center,
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.near_me,
+                        size: 50.0,
+                      ),
                     ),
-                    // Text(
-                    //   '${weatherModel.getWeatherIcon(300)}',
-                    //   style: funcKConditionTextStyle(dynamicSize.height * 0.07),
-                    // ),
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.location_city,
+                        size: 50.0,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text(
-                  "It's 🍦 time in $name!",
-                  textAlign: TextAlign.right,
-                  style: kMessageTextStyle,
+                Padding(
+                  padding: EdgeInsets.only(left: 15.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '$weatherTemp',
+                        style: funcKTempTextStyle(dynamicSize.height * 0.1),
+                        textAlign: TextAlign.start,
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(right: 15.0),
+                        child: Text(
+                          '$weatherIcon',
+                          style:
+                              funcKConditionTextStyle(dynamicSize.height * 0.1),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: Text(
+                    "It's $weatherIcon time in $name!",
+                    textAlign: TextAlign.right,
+                    style: funcKMessageTextStyle(dynamicSize.height * 0.1),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

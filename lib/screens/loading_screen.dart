@@ -1,5 +1,6 @@
 import 'package:climadata/screens/location_screen.dart';
 import 'package:climadata/services/networking.dart';
+import 'package:climadata/services/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:climadata/services/location.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,44 +19,38 @@ class _LoadingScreenState extends State<LoadingScreen> {
   //   // TODO: implement deactivate
   //   super.deactivate();
   // }
-  dynamic data;
-  dynamic temp;
-  dynamic condition;
-  dynamic name;
-  NetworkHelper networkHelper;
-  dynamic weatherDescription;
+  // dynamic temp;
+  // dynamic condition;
+  // dynamic name;
+  // dynamic weatherDescription;
+  WeatherModel weatherModel;
+  dynamic getWeatherData;
   bool isLoading = true;
-  double latitude;
-  double longitude;
 
   @override
   void initState() {
     super.initState();
+    weatherModel = WeatherModel();
     getLocationData();
   }
 
   Future<void> getLocationData() async {
-    ClassLocation location = ClassLocation(); // --> objeto criado/instanciado
-    await location.getCurrenteLocation();
-    latitude = location.latitude;
-    longitude = location.longitude;
+    // var data = await weatherModel.getWeatherData();
 
-    // ignore: await_only_futures
-    networkHelper = await NetworkHelper(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
-
-    data = await networkHelper.getData();
+    getWeatherData = await weatherModel.getWeatherData();
     setState(() {
       isLoading = false;
     });
 
-    temp = (data['main']['temp'] - 273.15).toStringAsFixed(0);
-    condition = data['weather'][0]['id'];
+    // temp = (data['main']['temp'] - 273.15).toInt();
+    // condition = data['weather'][0]['id'];
+    // name = data['name'];
+    // weatherDescription = data['weather'][0]['main'];
 
     // ou
 
-    name = networkHelper.name;
-    weatherDescription = networkHelper.weatherDescription;
+    // name = weatherModel.name;
+    // weatherDescription = weatherModel.weatherDescription;
   }
 
   @override
@@ -115,10 +110,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('temp:                  $temp°'),
-                  Text('condition:          $condition'),
-                  Text('name:                 $name'),
-                  Text('description:       $weatherDescription'),
+                  Text('temp:                  ${weatherModel.temp}'),
+                  Text('condition:          ${weatherModel.condition}'),
+                  Text('name:                 ${weatherModel.name}'),
+                  Text('description:       ${weatherModel.weatherDescription}'),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -126,7 +121,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                         MaterialPageRoute(
                           builder: (context) {
                             return LocationScreen(
-                              locationWeather: data,
+                              locationWeather: getWeatherData,
                             );
                           },
                         ),

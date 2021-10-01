@@ -38,3 +38,21 @@ const kButtonTextStyle = TextStyle(
 const kConditionTextStyle = TextStyle(
   fontSize: 100.0,
 );
+
+const textInput = InputDecoration(
+  filled: true,
+  fillColor: Colors.white,
+  hintText: 'Buscar o nome de uma cidade',
+  hintStyle: TextStyle(
+    color: Colors.grey,
+  ),
+  icon: Icon(
+    Icons.location_city,
+  ),
+  // border: InputBorder.none, // sem bordar
+  border: OutlineInputBorder(
+    // borderRadius: BorderRadius.circular(8),
+    borderRadius: BorderRadius.all(Radius.circular(8)),
+    borderSide: BorderSide.none, // sem bordar
+  ),
+);

@@ -7,6 +7,7 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  String string;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +36,17 @@ class _CityScreenState extends State<CityScreen> {
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: TextFormField(
+                  //cor do input
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  //função para cada mudança, parâmentro é o input
+                  onChanged: (value) {
+                    print(value);
+                  },
+                  decoration: textInput,
+                ),
               ),
               MaterialButton(
                 onPressed: () {},

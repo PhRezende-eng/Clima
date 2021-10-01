@@ -17,8 +17,11 @@ class WeatherModel {
     // ignore: await_only_futures
     var networkHelper = await NetworkHelper(
         '$baseUrl/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey');
+    print(networkHelper.condition); //null
 
     var data = await networkHelper.getData();
+
+    print(networkHelper.condition); // depois de fazer o getData vem a resposta
 
     temp = (data['main']['temp'] - 273.15).toInt();
     condition = data['weather'][0]['id'];

@@ -1,3 +1,4 @@
+import 'package:climadata/screens/city_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:climadata/utilities/constants.dart';
 import '../services/weather.dart';
@@ -76,7 +77,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CityScreen(),
+                        ),
+                      );
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,

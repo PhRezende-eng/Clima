@@ -1,4 +1,5 @@
 import 'package:climadata/screens/city_screen.dart';
+import 'package:climadata/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:climadata/utilities/constants.dart';
 import '../services/weather.dart';
@@ -73,6 +74,20 @@ class _LocationScreenState extends State<LocationScreen> {
                     },
                     child: Icon(
                       Icons.near_me,
+                      size: 50.0,
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterScreen(),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.account_box_rounded,
                       size: 50.0,
                     ),
                   ),

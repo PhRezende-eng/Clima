@@ -45,7 +45,7 @@ class _CityScreenState extends State<CityScreen> {
                   onChanged: (value) {
                     print(value);
                   },
-                  decoration: textInput,
+                  decoration: funcKInputDecoration(),
                 ),
               ),
               MaterialButton(

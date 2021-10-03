@@ -45,7 +45,10 @@ class _CityScreenState extends State<CityScreen> {
                   onChanged: (value) {
                     print(value);
                   },
-                  decoration: funcKInputDecoration(),
+                  decoration: funcKInputDecoration(
+                    whichIcon: Icons.location_city,
+                    hintText: 'Buscar o nome de uma cidade',
+                  ),
                 ),
               ),
               MaterialButton(

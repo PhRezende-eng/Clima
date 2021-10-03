@@ -45,7 +45,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var dynamicSize = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: <Widget>[
                     Text(
                       '$tempo°',
-                      style: funcKTempTextStyle(dynamicSize.height * 0.1),
+                      style: funcKTempTextStyle(size.height * 0.1),
                       textAlign: TextAlign.start,
                     ),
                     Container(
@@ -121,8 +121,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       padding: EdgeInsets.only(right: 15.0),
                       child: Text(
                         '$weatherIcon',
-                        style:
-                            funcKConditionTextStyle(dynamicSize.height * 0.1),
+                        style: funcKConditionTextStyle(size.height * 0.1),
                       ),
                     ),
                   ],
@@ -133,7 +132,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Text(
                   "$weatherTemp in $name!",
                   textAlign: TextAlign.center,
-                  style: funcKMessageTextStyle(dynamicSize.height * 0.08),
+                  style: funcKMessageTextStyle(size.height * 0.08),
                 ),
               ),
             ],

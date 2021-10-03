@@ -72,29 +72,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 72,
-                  color: Colors.transparent,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Confirmar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.green[400],
-                      ),
-                    ),
-                  ),
+                funKConfirmeButton(
+                  onTap: () {},
+                  text: 'Confirmar',
                 ),
               ],
             ),

@@ -24,32 +24,35 @@ InputDecoration funcKInputDecoration({
   );
 }
 
-// Container funKConfirmeButton() {
-//   return Container(
-//     width: double.infinity,
-//     height: size.height * 0.12,
-//     color: Colors.transparent,
-//     child: GestureDetector(
-//       onTap: () {},
-//       child: Container(
-//         margin: EdgeInsets.all(8),
-//         alignment: Alignment.center,
-//         child: Text(
-//           'Confirmar',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 20,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(8),
-//           color: Colors.green[400],
-//         ),
-//       ),
-//     ),
-//   );
-// }
+Container funKConfirmeButton({
+  VoidCallback onTap,
+  String text,
+}) {
+  return Container(
+    width: double.infinity,
+    height: 72,
+    color: Colors.transparent,
+    child: GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.all(8),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.green[400],
+        ),
+      ),
+    ),
+  );
+}
 
 TextStyle funcKTempTextStyle(double fontSize) {
   return TextStyle(

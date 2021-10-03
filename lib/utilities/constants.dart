@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
-InputDecoration funcKInputDecoration() {
+InputDecoration funcKInputDecoration({
+  String hintText,
+  IconData whichIcon,
+  bool hasIcon,
+}) {
   return InputDecoration(
     filled: true,
     fillColor: Colors.white,
-    hintText: 'Buscar o nome de uma cidade',
+    hintText: hintText,
     hintStyle: TextStyle(
       color: Colors.grey,
     ),
     icon: Icon(
-      Icons.location_city,
+      whichIcon,
     ),
     // border: InputBorder.none, // sem bordar
     border: OutlineInputBorder(
@@ -19,6 +23,33 @@ InputDecoration funcKInputDecoration() {
     ),
   );
 }
+
+// Container funKConfirmeButton() {
+//   return Container(
+//     width: double.infinity,
+//     height: size.height * 0.12,
+//     color: Colors.transparent,
+//     child: GestureDetector(
+//       onTap: () {},
+//       child: Container(
+//         margin: EdgeInsets.all(8),
+//         alignment: Alignment.center,
+//         child: Text(
+//           'Confirmar',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 20,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(8),
+//           color: Colors.green[400],
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 TextStyle funcKTempTextStyle(double fontSize) {
   return TextStyle(

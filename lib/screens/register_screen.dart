@@ -10,6 +10,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController,
+      passwordController,
+      confirmPasswordController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    passwordController = TextEditingController();
+    emailController = TextEditingController();
+    confirmPasswordController = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -30,50 +43,120 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: SafeArea(
             child: Column(
               children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: MaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 50.0,
+                    ),
+                  ),
+                ),
                 Expanded(
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            size: 50.0,
-                          ),
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: TextFormField(
+                                controller: emailController,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Digite uma senha válida';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (_) {
+                                  print(emailController.text);
+                                },
+                                decoration: funcKInputDecoration(
+                                  whichIcon: Icons.email_rounded,
+                                  hintText: 'Email',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: passwordController,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    validator: (value) {
+                                      if (value.length < 6) {
+                                        return 'Digite no mínimo 6 caracteres';
+                                      } else if (value == null ||
+                                          value.isEmpty) {
+                                        return 'Digite uma senha válida';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: funcKInputDecoration(
+                                      hintText: 'Senha',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: confirmPasswordController,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    validator: (value) {
+                                      if (value != passwordController.text) {
+                                        return 'Digite a mesma senha';
+                                      } else if (value == null ||
+                                          value.isEmpty) {
+                                        return 'Digite uma senha válida';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: funcKInputDecoration(
+                                      hintText: 'Confirmar senha',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: TextFormField(
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          decoration: funcKInputDecoration(
-                            whichIcon: Icons.email_rounded,
-                            hintText: 'Email',
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: TextFormField(
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                          decoration: funcKInputDecoration(
-                            whichIcon: Icons.password_rounded,
-                            hintText: 'Senha',
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 funKConfirmeButton(
-                  onTap: () {},
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      ScaffoldMessenger.of(context).showMaterialBanner(
+                        MaterialBanner(
+                          backgroundColor: Colors.white,
+                          content: Text('Estamos confirmando os dados'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => closeMaterialBanner(context),
+                              child: Text('OK!'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
                   text: 'Confirmar',
                 ),
               ],
@@ -82,5 +165,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void closeMaterialBanner(BuildContext context) {
+    ScaffoldMessenger.of(context).removeCurrentMaterialBanner();
   }
 }

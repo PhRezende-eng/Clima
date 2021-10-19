@@ -12,9 +12,9 @@ InputDecoration funcKInputDecoration({
     hintStyle: TextStyle(
       color: Colors.grey,
     ),
-    icon: Icon(
-      whichIcon,
-    ),
+    // icon: Icon(
+    //       whichIcon,
+    //     ),
     // border: InputBorder.none, // sem bordar
     border: OutlineInputBorder(
       // borderRadius: BorderRadius.circular(8),

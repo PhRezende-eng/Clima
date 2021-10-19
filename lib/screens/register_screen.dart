@@ -71,13 +71,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Digite uma senha válida';
+                                    return 'Digite um email válido';
+                                  } else if (!value.contains('@') ||
+                                      !value.contains('.com')) {
+                                    return 'Digite um email válido';
                                   }
                                   return null;
                                 },
-                                onChanged: (_) {
-                                  print(emailController.text);
-                                },
+                                // onChanged: (_) {
+                                //   print(emailController.text);
+                                // },
                                 decoration: funcKInputDecoration(
                                   whichIcon: Icons.email_rounded,
                                   hintText: 'Email',

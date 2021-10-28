@@ -18,6 +18,7 @@ class _LocationScreenState extends State<LocationScreen> {
   int tempo;
   String weatherIcon;
   String name;
+  String cityName;
   @override
   void initState() {
     super.initState();
@@ -92,13 +93,18 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var cityName = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CityScreen(),
                         ),
                       );
+                      if (cityName != null) {
+                        var getCityName = await weatherModel
+                            .getWeatherLocation(cityName ?? '');
+                        updateUI(getCityName);
+                      }
                     },
                     child: Icon(
                       Icons.location_city,

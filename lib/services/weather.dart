@@ -2,7 +2,7 @@ import 'package:climadata/services/location.dart';
 import 'package:climadata/services/networking.dart';
 
 const apiKey = '4b567033eb2835b4087185083040ffde';
-const baseUrl = 'https://api.openweathermap.org/data/2.5';
+const baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 class WeatherModel {
   int temp;
@@ -10,13 +10,19 @@ class WeatherModel {
   String name;
   String weatherDescription;
 
+  Future<dynamic> getWeatherLocation(String cityName) async {
+    NetworkHelper networkHelper =
+        NetworkHelper('$baseUrl?q=$cityName&appid=$apiKey');
+    var data = await networkHelper.getData();
+    return data;
+  }
+
   Future<dynamic> getWeatherData() async {
     ClassLocation location = ClassLocation(); // --> objeto criado/instanciado
     await location.getCurrenteLocation();
 
-    // ignore: await_only_futures
-    var networkHelper = await NetworkHelper(
-        '$baseUrl/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey');
+    NetworkHelper networkHelper = NetworkHelper(
+        '$baseUrl?lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey');
     print(networkHelper.condition); //null
 
     var data = await networkHelper.getData();

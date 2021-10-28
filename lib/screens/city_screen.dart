@@ -7,7 +7,7 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
-  String string;
+  String cityName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                   //função para cada mudança, parâmentro é o input
                   onChanged: (value) {
-                    print(value);
+                    cityName = value;
                   },
                   decoration: funcKInputDecoration(
                     whichIcon: Icons.location_city,
@@ -52,7 +52,13 @@ class _CityScreenState extends State<CityScreen> {
                 ),
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  //retorna o context e em seguida faz o pop
+                  // Navigator.of(context).pop(cityName);
+
+                  //retorna o context junto com o pop
+                  Navigator.pop(context, cityName);
+                },
                 child: Text(
                   'Get Weather',
                   style: kButtonTextStyle,
